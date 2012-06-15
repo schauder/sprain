@@ -1,0 +1,22 @@
+-@ val nodes: Set[String] = Set() 
+-@ val links: Set[(String, String, String)] = Set() 
+
+!!! 5
+html(lang="en")
+  head
+  body
+    h1 Jade - node template engine
+    form(action="nodes/new" method="post")
+      input(type="text" name="nodeName") 
+      input(type="submit") 
+    form(action="links/new" method="post")
+      input(type="text" name="nodeFrom") 
+      input(type="text" name="link") 
+      input(type="text" name="nodeTo") 
+      input(type="submit") 
+    - for(n <- nodes)
+      #container
+        = n
+    - for(l <- links)
+      #container
+        = l
