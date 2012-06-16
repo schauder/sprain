@@ -1,3 +1,4 @@
+* separate persistante store implementation and store trait
 * clean up build path: junit, scalatest, h2 db
 * Persistence
 * UAT for stuff above
