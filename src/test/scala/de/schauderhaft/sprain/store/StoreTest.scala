@@ -1,13 +1,13 @@
-package de.schauderhaft.knoweb.store
+package de.schauderhaft.sprain.store
 
-import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
-import org.scalatest.FunSuite
-import org.scalaquery.session._
-import org.scalaquery.session.Database.threadLocalSession
 import org.scalaquery.ql.basic.BasicDriver.Implicit._
-import org.scalatest.BeforeAndAfter
 import org.scalaquery.session.Database.threadLocalSession
+import org.scalaquery.session.Database.threadLocalSession
+import org.scalaquery.session._
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.BeforeAndAfter
+import org.scalatest.FunSuite
 
 @RunWith(classOf[JUnitRunner])
 class StoreTest extends FunSuite with BeforeAndAfter {

@@ -1,4 +1,4 @@
-package de.schauderhaft.knoweb
+package de.schauderhaft.sprain
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner

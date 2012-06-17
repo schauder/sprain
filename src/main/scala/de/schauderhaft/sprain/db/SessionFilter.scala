@@ -5,10 +5,12 @@ import javax.servlet.ServletRequest
 import javax.servlet.ServletResponse
 import javax.servlet.FilterChain
 import org.scalaquery.session.Database
-import de.schauderhaft.knoweb.store.Nodes
 import org.scalaquery.session.Database.threadLocalSession
 import org.scalaquery.ql.basic.BasicDriver.Implicit._
-import de.schauderhaft.knoweb.store.Links
+
+import de.schauderhaft.sprain.store.Links;
+import de.schauderhaft.sprain.store.Nodes;
+
 import javax.servlet.ServletConfig
 import javax.servlet.FilterConfig
 

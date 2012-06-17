@@ -1,11 +1,13 @@
-package de.schauderhaft.knoweb.store
+package de.schauderhaft.sprain.store
 
-import org.scalaquery.ql.basic.{ BasicTable => Table }
-import org.scalaquery.ql.TypeMapper._
-import org.scalaquery.ql._
-import org.scalaquery.ql.basic.BasicDriver.Implicit._
-import org.scalaquery.session._
 import java.util.UUID
+
+import org.scalaquery.ql.TypeMapper.StringTypeMapper
+import org.scalaquery.ql.basic.BasicDriver.Implicit.columnBaseToInsertInvoker
+import org.scalaquery.ql.basic.BasicDriver.Implicit.queryToQueryInvoker
+import org.scalaquery.ql.basic.BasicDriver.Implicit.tableToQuery
+import org.scalaquery.ql.basic.{BasicTable => Table}
+import org.scalaquery.session.Session
 
 class Store(sessionFunc : => Session) {
 

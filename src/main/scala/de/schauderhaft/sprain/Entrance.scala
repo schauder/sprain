@@ -1,11 +1,11 @@
-package de.schauderhaft.knoweb
+package de.schauderhaft.sprain
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod.POST
-import org.springframework.web.servlet.view.RedirectView
 import org.springframework.web.servlet.ModelAndView
 import scala.collection.JavaConversions.mapAsJavaMap
+
 @Controller
 class Entrance {
     var nodes = Set[String]()
