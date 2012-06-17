@@ -3,7 +3,6 @@ package de.schauderhaft.sprain.store
 import org.junit.runner.RunWith
 import org.scalaquery.ql.basic.BasicDriver.Implicit._
 import org.scalaquery.session.Database.threadLocalSession
-import org.scalaquery.session.Database.threadLocalSession
 import org.scalaquery.session._
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.BeforeAndAfter
@@ -31,12 +30,12 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
     }
 
     txtest("new store does not contain nodes") {
-        val store = new PersistentStore(threadLocalSession)
+        val store = new PersistentStore()
         store.allNodes should equal(Set())
     }
 
     txtest("a store contains nodes added to it") {
-        val store = new PersistentStore(threadLocalSession)
+        val store = new PersistentStore()
         store.add("a")
         store.add("b")
 
@@ -44,15 +43,15 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
     }
 
     txtest("nodes in a store can be retrieved using a different store") {
-        val store = new PersistentStore(threadLocalSession)
+        val store = new PersistentStore()
         store.add("a")
         store.add("b")
 
-        new PersistentStore(threadLocalSession).allNodes should equal(Set("a", "b"))
+        new PersistentStore().allNodes should equal(Set("a", "b"))
     }
 
     txtest("adding a node is a projection") {
-        val store = new PersistentStore(threadLocalSession)
+        val store = new PersistentStore()
         store.add("a")
         store.add("a")
 
@@ -60,12 +59,12 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
     }
 
     txtest("new store does not contain links") {
-        val store = new PersistentStore(threadLocalSession)
+        val store = new PersistentStore()
         store.allLinks should equal(Set())
     }
 
     txtest("a store contains the links added to it") {
-        val store = new PersistentStore(threadLocalSession)
+        val store = new PersistentStore()
 
         store.add("a")
         store.add("b")

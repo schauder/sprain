@@ -8,10 +8,9 @@ import org.scalaquery.ql.basic.BasicDriver.Implicit.queryToQueryInvoker
 import org.scalaquery.ql.basic.BasicDriver.Implicit.tableToQuery
 import org.scalaquery.ql.basic.{ BasicTable => Table }
 import org.scalaquery.session.Session
+import org.scalaquery.session.Database.threadLocalSession
 
-class PersistentStore(sessionFunc : => Session) extends Store {
-
-    implicit def session = sessionFunc
+class PersistentStore extends Store {
 
     def allNodes() = {
         val nodes = for (n <- Nodes) yield n.name
