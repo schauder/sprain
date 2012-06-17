@@ -10,7 +10,7 @@ import org.scalatest.BeforeAndAfter
 import org.scalatest.FunSuite
 
 @RunWith(classOf[JUnitRunner])
-class StoreTest extends FunSuite with BeforeAndAfter {
+class PersistentStoreTest extends FunSuite with BeforeAndAfter {
     import org.scalatest.matchers.ShouldMatchers._
 
     val db = Database.forURL("jdbc:h2:mem:test1;DB_CLOSE_DELAY=-1", driver = "org.h2.Driver")
@@ -31,12 +31,12 @@ class StoreTest extends FunSuite with BeforeAndAfter {
     }
 
     txtest("new store does not contain nodes") {
-        val store = new Store(threadLocalSession)
+        val store = new PersistentStore(threadLocalSession)
         store.allNodes should equal(Set())
     }
 
     txtest("a store contains nodes added to it") {
-        val store = new Store(threadLocalSession)
+        val store = new PersistentStore(threadLocalSession)
         store.add("a")
         store.add("b")
 
@@ -44,15 +44,15 @@ class StoreTest extends FunSuite with BeforeAndAfter {
     }
 
     txtest("nodes in a store can be retrieved using a different store") {
-        val store = new Store(threadLocalSession)
+        val store = new PersistentStore(threadLocalSession)
         store.add("a")
         store.add("b")
 
-        new Store(threadLocalSession).allNodes should equal(Set("a", "b"))
+        new PersistentStore(threadLocalSession).allNodes should equal(Set("a", "b"))
     }
 
     txtest("adding a node is a projection") {
-        val store = new Store(threadLocalSession)
+        val store = new PersistentStore(threadLocalSession)
         store.add("a")
         store.add("a")
 
@@ -60,12 +60,12 @@ class StoreTest extends FunSuite with BeforeAndAfter {
     }
 
     txtest("new store does not contain links") {
-        val store = new Store(threadLocalSession)
+        val store = new PersistentStore(threadLocalSession)
         store.allLinks should equal(Set())
     }
 
     txtest("a store contains the links added to it") {
-        val store = new Store(threadLocalSession)
+        val store = new PersistentStore(threadLocalSession)
 
         store.add("a")
         store.add("b")
