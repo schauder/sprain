@@ -16,8 +16,9 @@ class StoreTest extends FunSuite with BeforeAndAfter {
     val db = Database.forURL("jdbc:h2:mem:test1;DB_CLOSE_DELAY=-1", driver = "org.h2.Driver")
 
     db withSession {
-        (Nodes.ddl ++ Links.ddl).create
-        // println(Nodes.ddl.createStatements.mkString("/n"))
+        val ddl = (Nodes.ddl ++ Links.ddl)
+        ddl.create
+        println(ddl.createStatements.mkString("\n"))
     }
 
     def txtest(name : String)(t : => Any) {
