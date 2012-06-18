@@ -5,20 +5,25 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod.POST
 import org.springframework.web.servlet.ModelAndView
 import scala.collection.JavaConversions.mapAsJavaMap
+import de.schauderhaft.sprain.store.Store
+import de.schauderhaft.sprain.store.PersistentStore
 
 @Controller
-class Entrance {
-    var nodes = Set[String]()
-    var links = Set[(String, String, String)]()
+class GraphController(val store : Store) {
+
+    def this() = this(new PersistentStore)
 
     @RequestMapping(value = Array("/"))
-    def home() = new ModelAndView("graph", Map("nodes" -> nodes, "links" -> links))
+    def home() = new ModelAndView("graph",
+        Map(
+            "nodes" -> store.allNodes,
+            "links" -> store.allLinks))
 
     @RequestMapping(
         value = Array("/nodes/new"),
         method = Array(POST))
     def add(nodeName : String) = {
-        nodes = nodes + nodeName
+        store.add(nodeName)
 
         "redirect:/"
     }
@@ -27,8 +32,7 @@ class Entrance {
         value = Array("/links/new"),
         method = Array(POST))
     def addLink(nodeFrom : String, link : String, nodeTo : String) = {
-        nodes = nodes + nodeFrom + nodeTo
-        links = links + ((nodeFrom, link, nodeTo))
+        store.add(nodeFrom, link, nodeTo)
 
         "redirect:/"
     }
