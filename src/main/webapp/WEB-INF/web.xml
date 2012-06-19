@@ -16,7 +16,7 @@
 	</servlet-mapping>
 
 	<filter>
-		<filter-name>sessionFilter</filter-name>
-		<filter-class>de.schauderhaft.sprain.db.SessionFilter</filter-class>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
 </web-app>

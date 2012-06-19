@@ -27,4 +27,12 @@
 	</bean>
 
 
+	<bean id="datasource" class=" org.h2.jdbcx.JdbcDataSource">
+		<property name="uRL" value="jdbc:h2:mem:test1;DB_CLOSE_DELAY=-1" />
+	</bean>
+
+	<bean id="sessionFilter" class="de.schauderhaft.sprain.db.SessionFilter" autowire="constructor">
+	
+	</bean>
+
 </beans>

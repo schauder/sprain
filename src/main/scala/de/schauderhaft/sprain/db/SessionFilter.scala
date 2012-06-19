@@ -7,19 +7,18 @@ import javax.servlet.FilterChain
 import org.scalaquery.session.Database
 import org.scalaquery.session.Database.threadLocalSession
 import org.scalaquery.ql.basic.BasicDriver.Implicit._
-
-import de.schauderhaft.sprain.store.Links;
-import de.schauderhaft.sprain.store.Nodes;
-
+import de.schauderhaft.sprain.store.Links
+import de.schauderhaft.sprain.store.Nodes
 import javax.servlet.ServletConfig
 import javax.servlet.FilterConfig
+import javax.sql.DataSource
 
-class SessionFilter extends Filter {
+class SessionFilter(dataSource : DataSource) extends Filter {
 
     // this is extremely hackish. 
     // Multiple Filters will try to create the database multiple times 
     // which will cause bad things tm to happen
-    val db = Database.forURL("jdbc:h2:mem:test1;DB_CLOSE_DELAY=-1", driver = "org.h2.Driver")
+    val db = Database.forDataSource(dataSource)
 
     db withSession {
         val ddl = (Nodes.ddl ++ Links.ddl)

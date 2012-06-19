@@ -1,14 +1,10 @@
 * separate persistante store implementation and store trait
-* clean up build path: junit, scalatest, h2 db
 * Persistence
 * UAT for stuff above
 * find performant roundtrip (JRebel?)
     - JRebel
     - * http://stackoverflow.com/questions/998737/integrating-tomcat-and-eclipse-as-a-hot-deploy-environment
 * Fehlerseiten für illegale URLs
-* was genau passiert, wenn man einfach einen String aus einer Controller Methode zurückliefert.
-    - was ist ein ViewResolver?
-    - was ist der Unterschied zwischen @Controler, @Service und @Configuration?
 * HTML5 webforms
 * angular.js
 * Fehlerseite
@@ -19,11 +15,8 @@
 * Node Classifier (Personen, Objekte, Orte, Dokumente ...) ersetzen
 * Node Processor
 * Hosted vs Local Deployment
-* RDF/Semantic web syntax    
-* persist stuff in the db
-* modify build script to create the equivalent of this entry in .classpath 	<classpathentry kind="lib" path="C:/Users/jens.schauder/.gradle/caches/artifacts-13/filestore/javax/javaee-api/6.0/jar/d6f416983ea13c334d5c599a9045414ecaf5d66d/javaee-api-6.0.jar"/>
+* RDF/Semantic web syntax
 * XSS defense
 * Pingback auf Seiten 
-* Rename to Sprain
 * Feedback Möglichkeit
 * http://arborjs.org/introduction
