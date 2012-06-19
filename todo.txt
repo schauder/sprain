@@ -1,5 +1,4 @@
-* separate persistante store implementation and store trait
-* Persistence
+* deploy to cloud foundry
 * UAT for stuff above
 * find performant roundtrip (JRebel?)
     - JRebel
@@ -20,3 +19,5 @@
 * Pingback auf Seiten 
 * Feedback Möglichkeit
 * http://arborjs.org/introduction
+* HTML/CSS validation
+for test
