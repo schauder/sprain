@@ -3,7 +3,20 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-	<!-- Processes application requests -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<filter>
+		<filter-name>sessionFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>sessionFilter</filter-name>
+		<servlet-name>dispatch</servlet-name>
+	</filter-mapping>
+
 	<servlet>
 		<servlet-name>dispatch</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -15,8 +28,4 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	<filter>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
 </web-app>
