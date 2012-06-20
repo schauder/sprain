@@ -35,7 +35,7 @@ class SessionFilter(dataSource : DataSource) extends Filter {
             chain.doFilter(request, response)
         }
     }
-
+    //TODO
     override def init(config : FilterConfig) {}
 
     override def destroy() {}
