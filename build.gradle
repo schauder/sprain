@@ -3,6 +3,10 @@ apply plugin: 'war'
 apply plugin: 'tomcat'
 apply plugin: 'eclipse-wtp'
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.0'
+}
+
 buildscript {
     repositories {
         add(new org.apache.ivy.plugins.resolver.URLResolver()) {
