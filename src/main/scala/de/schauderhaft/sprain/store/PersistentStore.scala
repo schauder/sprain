@@ -21,30 +21,30 @@ class PersistentStore extends Store {
         .list.toSet
 
     /** adds a node to the store */
-    def add(node : String) {
-        Nodes.insert(UUID.randomUUID.toString, node)
+    def add(node : String) = {
+        val id = UUID.randomUUID.toString
+        Nodes.insert(id, node)
+        id
     }
 
     /** adds a link between to nodes to the store */
-    def add(from : String, link : String, to : String) {
-        Links.insert(UUID.randomUUID.toString, from, link, to)
+    def add(from : String, link : String, to : String) = {
+        val id = UUID.randomUUID.toString
+        Links.insert(id, from, link, to)
+        id
     }
 
     /** removes a node from the store, does nothing when the node is not present in the store*/
-    def deleteNode(node : String) {
-        Nodes.where(_.name === node).delete
+    def deleteNode(id : String) {
+        Nodes.where(_.id === id).delete
     }
 
     /** removes a link from the store, does nothing when the node is not present in the store*/
-    def deleteLink(from : String,
-                   link : String,
-                   to : String) {
+    def deleteLink(id : String) {
 
         val linksToDelete = for {
             l <- Links
-            if l.from === from
-            if l.link === link
-            if l.to === to
+            if l.id === id
         } yield l
 
         linksToDelete.delete

@@ -65,9 +65,9 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
 
     txtest("deleting a node removes the node") {
         val store = new PersistentStore()
-        store.add("a")
+        val id = store.add("a")
         store.add("b")
-        store.deleteNode("a");
+        store.deleteNode(id);
         store.allNodes should equal(Set("b"))
     }
 
@@ -79,16 +79,16 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
 
     txtest("deleting a link removes the link") {
         val store = new PersistentStore()
-        store.add("from", "verb", "to")
+        val id = store.add("from", "verb", "to")
         store.add("from", "verb", "toOther")
-        store.deleteLink("from", "verb", "to")
+        store.deleteLink(id)
 
         store.allLinks should equal(Set(("from", "verb", "toOther")))
     }
 
     txtest("deleting a link from an empty store does nothing") {
         val store = new PersistentStore()
-        store.deleteLink("from", "verb", "toOther")
+        store.deleteLink("IdontEvenHaveAuuid")
 
         store.allLinks should equal(Set())
     }

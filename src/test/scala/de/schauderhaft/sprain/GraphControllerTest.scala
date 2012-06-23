@@ -29,7 +29,7 @@ class GraphControllerTest extends FunSuite {
 
         entrance.add("alpha")
 
-        store.nodes should be(Set("alpha"))
+        store.nodes.values.toSet should be(Set("alpha"))
     }
 
     test("add link adds the link and nodes to the store") {
@@ -38,8 +38,8 @@ class GraphControllerTest extends FunSuite {
 
         entrance.addLink("alpha", "into", "beta")
 
-        store.nodes should be(Set("alpha", "beta"))
-        store.links should be(Set(("alpha", "into", "beta")))
+        store.nodes.values.toSet should be(Set("alpha", "beta"))
+        store.links.values.toSet should be(Set(("alpha", "into", "beta")))
     }
 
     test("delete node deletes a node from the store") {
@@ -55,23 +55,28 @@ class GraphControllerTest extends FunSuite {
     }
 
     class InMemoryStore extends Store {
-        var nodes = Set[String]()
-        var links = Set[(String, String, String)]()
+        import java.util.UUID
+        var nodes = Map[String, String]()
+        var links = Map[String, (String, String, String)]()
 
-        def allNodes() = nodes
+        def allNodes() = nodes.values.toSet
 
-        def allLinks() = links
+        def allLinks() = links.values.toSet
 
         /** adds a node to the store */
-        def add(node : String) {
-            nodes += node
+        def add(node : String) = {
+            val id = UUID.randomUUID.toString
+            nodes += id -> node
+            id
         }
 
         /** adds a link between to nodes to the store */
-        def add(from : String, link : String, to : String) {
+        def add(from : String, link : String, to : String) = {
+            val id = UUID.randomUUID.toString
             add(from)
             add(to)
-            links += ((from, link, to))
+            links += (id -> (from, link, to))
+            id
         }
 
         /** removes a node from the store, does nothing when the node is not present in the store*/
@@ -80,10 +85,8 @@ class GraphControllerTest extends FunSuite {
         }
 
         /** removes a link from the store, does nothing when the node is not present in the store*/
-        def deleteLink(from : String,
-                       link : String,
-                       to : String) {
-            links -= ((from, link, to))
+        def deleteLink(id : String) {
+            links -= (id)
         }
     }
 }
