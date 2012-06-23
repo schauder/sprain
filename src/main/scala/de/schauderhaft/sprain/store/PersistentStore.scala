@@ -3,9 +3,7 @@ package de.schauderhaft.sprain.store
 import java.util.UUID
 
 import org.scalaquery.ql.TypeMapper.StringTypeMapper
-import org.scalaquery.ql.basic.BasicDriver.Implicit.columnBaseToInsertInvoker
-import org.scalaquery.ql.basic.BasicDriver.Implicit.queryToQueryInvoker
-import org.scalaquery.ql.basic.BasicDriver.Implicit.tableToQuery
+import org.scalaquery.ql.basic.BasicDriver.Implicit._
 import org.scalaquery.ql.basic.{ BasicTable => Table }
 import org.scalaquery.session.Session
 import org.scalaquery.session.Database.threadLocalSession
@@ -30,6 +28,26 @@ class PersistentStore extends Store {
     /** adds a link between to nodes to the store */
     def add(from : String, link : String, to : String) {
         Links.insert(UUID.randomUUID.toString, from, link, to)
+    }
+
+    /** removes a node from the store, does nothing when the node is not present in the store*/
+    def deleteNode(node : String) {
+        Nodes.where(_.name === node).delete
+    }
+
+    /** removes a link from the store, does nothing when the node is not present in the store*/
+    def deleteLink(from : String,
+                   link : String,
+                   to : String) {
+
+        val linksToDelete = for {
+            l <- Links
+            if l.from === from
+            if l.link === link
+            if l.to === to
+        } yield l
+
+        linksToDelete.delete
     }
 }
 

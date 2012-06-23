@@ -1,4 +1,6 @@
-* deploy to cloud foundry
+* refactor towards use of ids
+* split NodeStore and LinkStore
+* deploy db to cloud
 * UAT for stuff above
 * find performant roundtrip (JRebel?)
     - JRebel

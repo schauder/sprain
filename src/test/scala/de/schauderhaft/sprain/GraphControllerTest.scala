@@ -42,6 +42,18 @@ class GraphControllerTest extends FunSuite {
         store.links should be(Set(("alpha", "into", "beta")))
     }
 
+    test("delete node deletes a node from the store") {
+        pending
+    }
+
+    test("delete node deletes a node and its attached links from the store") {
+        pending
+    }
+
+    test("deleting a link deletes the link from the store, but not its nodes") {
+        pending
+    }
+
     class InMemoryStore extends Store {
         var nodes = Set[String]()
         var links = Set[(String, String, String)]()
@@ -60,6 +72,18 @@ class GraphControllerTest extends FunSuite {
             add(from)
             add(to)
             links += ((from, link, to))
+        }
+
+        /** removes a node from the store, does nothing when the node is not present in the store*/
+        def deleteNode(node : String) {
+            nodes -= node
+        }
+
+        /** removes a link from the store, does nothing when the node is not present in the store*/
+        def deleteLink(from : String,
+                       link : String,
+                       to : String) {
+            links -= ((from, link, to))
         }
     }
 }

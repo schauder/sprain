@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></head>
+  <body>
+    <h1>Sprain ... a spiders web for your brain</h1>
+    <form action="http://localhost:8080/sprain/nodes/new" method="post">
+      <input type="text" name="nodeName">
+      <input type="submit">
+    </form>
+    <form action="http://localhost:8080/sprain/links/new" method="post">
+      <input type="text" name="nodeFrom">
+      <input type="text" name="link">
+      <input type="text" name="nodeTo">
+      <input type="submit">
+    </form>
+    <div>
+      <a id="n1" href="/subject/1">First Node</a> icon button for delete
+    </div>
+    <div >
+      <a id="n2"href="/subject/2">Second Node</a>
+    </div>
+    <div>
+      <a id="n3" href="/subject/3">Third Node</a>
+    </div>
+    <div id="l1"><a href="#n1">First Node</a> <a href="/relation/n1">knows</a> <a href="#n3">Third Node</a></div>
+</body></html>
