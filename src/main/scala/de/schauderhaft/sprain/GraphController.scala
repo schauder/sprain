@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod.POST
 import org.springframework.web.servlet.ModelAndView
 import scala.collection.JavaConversions.mapAsJavaMap
 import de.schauderhaft.sprain.store.Store
-import de.schauderhaft.sprain.store.PersistentStore
+import de.schauderhaft.sprain.db.PersistentStore
 
 @Controller
 class GraphController(val store : Store) {

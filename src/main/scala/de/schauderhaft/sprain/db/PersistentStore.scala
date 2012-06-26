@@ -1,11 +1,15 @@
-package de.schauderhaft.sprain.store
+package de.schauderhaft.sprain.db
 
+import de.schauderhaft.sprain.store.Store
 import java.util.UUID
-
 import org.scalaquery.ql.TypeMapper.StringTypeMapper
-import org.scalaquery.ql.basic.BasicDriver.Implicit._
+import org.scalaquery.ql.basic.BasicDriver.Implicit.baseColumnToColumnOps
+import org.scalaquery.ql.basic.BasicDriver.Implicit.columnBaseToInsertInvoker
+import org.scalaquery.ql.basic.BasicDriver.Implicit.queryToDeleteInvoker
+import org.scalaquery.ql.basic.BasicDriver.Implicit.queryToQueryInvoker
+import org.scalaquery.ql.basic.BasicDriver.Implicit.tableToQuery
+import org.scalaquery.ql.basic.BasicDriver.Implicit.valueToConstColumn
 import org.scalaquery.ql.basic.{ BasicTable => Table }
-import org.scalaquery.session.Session
 import org.scalaquery.session.Database.threadLocalSession
 
 class PersistentStore extends Store {

@@ -7,6 +7,9 @@ import org.scalaquery.session._
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.BeforeAndAfter
 import org.scalatest.FunSuite
+import de.schauderhaft.sprain.db.Nodes
+import de.schauderhaft.sprain.db.PersistentStore
+import de.schauderhaft.sprain.db.Links
 
 @RunWith(classOf[JUnitRunner])
 class PersistentStoreTest extends FunSuite with BeforeAndAfter {
