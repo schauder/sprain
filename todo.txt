@@ -1,4 +1,7 @@
-* refactor towards use of ids
+* refactor towards use of proper objects
+* property test between persistent store and in memory store
+* testing the mapping of requests towards controller methods
+* testing generated html
 * split NodeStore and LinkStore
 * deploy db to cloud
 * UAT for stuff above
@@ -22,3 +25,29 @@
 * Feedback Möglichkeit
 * http://arborjs.org/introduction
 * HTML/CSS validation
+
+
+------------------------------ for testing controllers
+// from http://stackoverflow.com/a/7916344/66686
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("yourContext.xml")
+public class ControllerTest {
+
+    @Autowired
+    private RequestMappingHandlerAdapter handlerAdapter;
+
+    @Autowired
+    private RequestMappingHandlerMapping handlerMapping;
+
+    @Test
+    public void testController() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        // request init here
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        Object handler = handlerMapping.getHandler(request).getHandler();
+        ModelAndView modelAndView = handlerAdapter.handle(request, response, handler);
+
+        // modelAndView and/or response asserts here
+    }
+}

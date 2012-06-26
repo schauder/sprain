@@ -52,9 +52,10 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
 
     txtest("adding a node is a projection") {
         val store = new PersistentStore()
-        store.add("a")
-        store.add("a")
+        val a1Id = store.add("a")
+        val a2Id = store.add("a")
 
+        a1Id should equal(a2Id)
         store.allNodes should equal(Set("a"))
     }
 
@@ -104,5 +105,4 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
 
         store.allLinks should equal(Set(("a", "to", "b")))
     }
-
 }

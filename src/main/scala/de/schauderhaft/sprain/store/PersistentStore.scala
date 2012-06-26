@@ -22,9 +22,14 @@ class PersistentStore extends Store {
 
     /** adds a node to the store */
     def add(node : String) = {
-        val id = UUID.randomUUID.toString
-        Nodes.insert(id, node)
-        id
+        (Nodes.where(_.name === node) map (_.id)).
+            firstOption match {
+                case Some(id) => id
+                case None =>
+                    val id = UUID.randomUUID.toString
+                    Nodes.insert(id, node)
+                    id
+            }
     }
 
     /** adds a link between to nodes to the store */
