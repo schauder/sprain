@@ -10,6 +10,8 @@ import org.scalaquery.ql.basic.BasicDriver.Implicit._
 import javax.servlet.ServletConfig
 import javax.servlet.FilterConfig
 import javax.sql.DataSource
+import de.schauderhaft.sprain.db.schema.Nodes
+import de.schauderhaft.sprain.db.schema.Links
 
 class SessionFilter(dataSource : DataSource) extends Filter {
 
