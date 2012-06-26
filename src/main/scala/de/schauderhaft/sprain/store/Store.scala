@@ -1,7 +1,9 @@
 package de.schauderhaft.sprain.store
 
+import de.schauderhaft.sprain.model.Node
+
 trait Store {
-    def allNodes() : Set[String]
+    def allNodes() : Set[Node]
 
     def allLinks() : Set[(String, String, String)]
 

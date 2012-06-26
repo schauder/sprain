@@ -3,6 +3,7 @@ import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.sprain.store.Store
+import de.schauderhaft.sprain.model.Node
 
 @RunWith(classOf[JUnitRunner])
 class GraphControllerTest extends FunSuite {
@@ -29,7 +30,7 @@ class GraphControllerTest extends FunSuite {
 
         entrance.add("alpha")
 
-        store.nodes.values.toSet should be(Set("alpha"))
+        store.nodes.values.map(_.name) should equal(List("alpha"))
     }
 
     test("add link adds the link and nodes to the store") {
@@ -38,7 +39,7 @@ class GraphControllerTest extends FunSuite {
 
         entrance.addLink("alpha", "into", "beta")
 
-        store.nodes.values.toSet should be(Set("alpha", "beta"))
+        store.nodes.values.map(_.name).toSet should be(Set("alpha", "beta"))
         store.links.values.toSet should be(Set(("alpha", "into", "beta")))
     }
 
@@ -56,7 +57,7 @@ class GraphControllerTest extends FunSuite {
 
     class InMemoryStore extends Store {
         import java.util.UUID
-        var nodes = Map[String, String]()
+        var nodes = Map[String, Node]()
         var links = Map[String, (String, String, String)]()
 
         def allNodes() = nodes.values.toSet
@@ -66,7 +67,7 @@ class GraphControllerTest extends FunSuite {
         /** adds a node to the store */
         def add(node : String) = {
             val id = UUID.randomUUID.toString
-            nodes += id -> node
+            nodes += id -> Node(id, node)
             id
         }
 

@@ -12,12 +12,15 @@ import org.scalaquery.ql.basic.BasicDriver.Implicit.valueToConstColumn
 import org.scalaquery.session.Database.threadLocalSession
 import de.schauderhaft.sprain.db.schema.Nodes
 import de.schauderhaft.sprain.db.schema.Links
+import de.schauderhaft.sprain.model.Node
 
 class PersistentStore extends Store {
 
     def allNodes() = {
-        val nodes = for (n <- Nodes) yield n.name
-        nodes.list.toSet
+        val nodes = for (n <- Nodes) yield n
+        nodes.list.
+            map((n : (String, String)) => Node(n._1, n._2))
+            .toSet
     }
 
     def allLinks() = (

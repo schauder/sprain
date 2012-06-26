@@ -1,4 +1,4 @@
-package de.schauderhaft.sprain.store
+package de.schauderhaft.sprain.db
 
 import org.junit.runner.RunWith
 import org.scalaquery.ql.basic.BasicDriver.Implicit._
@@ -7,7 +7,6 @@ import org.scalaquery.session._
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.BeforeAndAfter
 import org.scalatest.FunSuite
-import de.schauderhaft.sprain.db.PersistentStore
 import de.schauderhaft.sprain.db.schema.Links
 import de.schauderhaft.sprain.db.schema.Nodes
 
@@ -42,7 +41,7 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
         store.add("a")
         store.add("b")
 
-        store.allNodes should equal(Set("a", "b"))
+        store.allNodes.map(_.name) should equal(Set("a", "b"))
     }
 
     txtest("nodes in a store can be retrieved using a different store") {
@@ -50,7 +49,7 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
         store.add("a")
         store.add("b")
 
-        new PersistentStore().allNodes should equal(Set("a", "b"))
+        new PersistentStore().allNodes.map(_.name).toSet should equal(Set("a", "b"))
     }
 
     txtest("adding a node is a projection") {
@@ -59,7 +58,7 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
         val a2Id = store.add("a")
 
         a1Id should equal(a2Id)
-        store.allNodes should equal(Set("a"))
+        store.allNodes.map(_.name) should equal(Set("a"))
     }
 
     txtest("new store does not contain links") {
@@ -72,7 +71,7 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
         val id = store.add("a")
         store.add("b")
         store.deleteNode(id);
-        store.allNodes should equal(Set("b"))
+        store.allNodes.map(_.name) should equal(Set("b"))
     }
 
     txtest("deleting a node from an empty store does nothing") {
