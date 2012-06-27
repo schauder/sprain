@@ -87,7 +87,7 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
         store.add("from", "verb", "toOther")
         store.deleteLink(id)
 
-        store.allLinks should equal(Set(Link("from", "verb", "toOther")))
+        store.allLinks.map(l => (l.fromId, l.link, l.toId)) should equal(Set(("from", "verb", "toOther")))
     }
 
     txtest("deleting a link from an empty store does nothing") {
@@ -106,6 +106,6 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
 
         store.add("a", "to", "b")
 
-        store.allLinks should equal(Set(Link("a", "to", "b")))
+        store.allLinks.map(l => (l.fromId, l.link, l.toId)) should equal(Set(("a", "to", "b")))
     }
 }

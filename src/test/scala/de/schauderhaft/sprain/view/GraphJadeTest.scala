@@ -12,9 +12,9 @@ class GraphJadeTest extends FunSuite {
     import org.scalatest.matchers.ShouldMatchers._
 
     val engine = new TemplateEngine
-
+    //    val template = engine.load("src/main/webapp/WEB-INF/views/graph.jade")
     test("rendering without parameter") {
-        val output = engine.layout("src/main/webapp/WEB-INF/views/graph.jade", Map("name" -> ("Hiram", "Chirino"), "city" -> "Tampa"))
+        val output = engine.layout("src/main/webapp/WEB-INF/views/graph.jade")
 
     }
     test("rendering nodes") {
@@ -31,15 +31,14 @@ class GraphJadeTest extends FunSuite {
     }
 
     test("rendering links") {
-        pending
         val output = engine.layout("src/main/webapp/WEB-INF/views/graph.jade",
-            Map("nodes" -> Set(
-                Link("1", "likes", "2"),
-                Link("1", "loves", "2"))))
+            Map("links" -> Set(
+                Link("42", "1", "likes", "2"),
+                Link("23", "1", "loves", "2"))))
 
         output should include("1")
         output should include("2")
-        output should include("alpha")
-        output should include("beta")
+        output should include("likes")
+        output should include("loves")
     }
 }

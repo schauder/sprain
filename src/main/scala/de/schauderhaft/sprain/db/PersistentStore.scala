@@ -27,7 +27,7 @@ class PersistentStore extends Store {
 
     def allLinks() = {
         val links = for (l <- Links)
-            yield (l.from, l.link, l.to)
+            yield l
         links.list.
             map(Link.tupled(_))
             .toSet

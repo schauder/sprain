@@ -41,7 +41,7 @@ class GraphControllerTest extends FunSuite {
         entrance.addLink("alpha", "into", "beta")
 
         store.nodes.values.map(_.name).toSet should be(Set("alpha", "beta"))
-        store.links.values.toSet should be(Set(Link("alpha", "into", "beta")))
+        store.links.values.map(l => (l.fromId, l.link, l.toId)).toSet should be(Set(("alpha", "into", "beta")))
     }
 
     test("delete node deletes a node from the store") {
@@ -77,7 +77,7 @@ class GraphControllerTest extends FunSuite {
             val id = UUID.randomUUID.toString
             add(from)
             add(to)
-            links += (id -> Link(from, link, to))
+            links += (id -> Link(id, from, link, to))
             id
         }
 
