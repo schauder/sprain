@@ -13,20 +13,25 @@ import org.scalaquery.session.Database.threadLocalSession
 import de.schauderhaft.sprain.db.schema.Nodes
 import de.schauderhaft.sprain.db.schema.Links
 import de.schauderhaft.sprain.model.Node
+import de.schauderhaft.sprain.model.Link
 
 class PersistentStore extends Store {
 
     def allNodes() = {
         val nodes = for (n <- Nodes) yield n
-        nodes.list.
-            map((n : (String, String)) => Node(n._1, n._2))
-            .toSet
+        nodes.
+            list.
+            map(Node.tupled(_)).
+            toSet
     }
 
-    def allLinks() = (
-        for (l <- Links)
-            yield (l.from, l.link, l.to))
-        .list.toSet
+    def allLinks() = {
+        val links = for (l <- Links)
+            yield (l.from, l.link, l.to)
+        links.list.
+            map(Link.tupled(_))
+            .toSet
+    }
 
     /** adds a node to the store */
     def add(node : String) = {

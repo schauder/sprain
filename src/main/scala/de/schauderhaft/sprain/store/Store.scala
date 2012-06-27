@@ -1,11 +1,12 @@
 package de.schauderhaft.sprain.store
 
 import de.schauderhaft.sprain.model.Node
+import de.schauderhaft.sprain.model.Link
 
 trait Store {
     def allNodes() : Set[Node]
 
-    def allLinks() : Set[(String, String, String)]
+    def allLinks() : Set[Link]
 
     /** adds a node to the store */
     def add(node : String) : String

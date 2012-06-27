@@ -9,6 +9,7 @@ import org.scalatest.BeforeAndAfter
 import org.scalatest.FunSuite
 import de.schauderhaft.sprain.db.schema.Links
 import de.schauderhaft.sprain.db.schema.Nodes
+import de.schauderhaft.sprain.model.Link
 
 @RunWith(classOf[JUnitRunner])
 class PersistentStoreTest extends FunSuite with BeforeAndAfter {
@@ -86,7 +87,7 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
         store.add("from", "verb", "toOther")
         store.deleteLink(id)
 
-        store.allLinks should equal(Set(("from", "verb", "toOther")))
+        store.allLinks should equal(Set(Link("from", "verb", "toOther")))
     }
 
     txtest("deleting a link from an empty store does nothing") {
@@ -105,6 +106,6 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
 
         store.add("a", "to", "b")
 
-        store.allLinks should equal(Set(("a", "to", "b")))
+        store.allLinks should equal(Set(Link("a", "to", "b")))
     }
 }

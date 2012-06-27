@@ -4,6 +4,7 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.sprain.store.Store
 import de.schauderhaft.sprain.model.Node
+import de.schauderhaft.sprain.model.Link
 
 @RunWith(classOf[JUnitRunner])
 class GraphControllerTest extends FunSuite {
@@ -40,7 +41,7 @@ class GraphControllerTest extends FunSuite {
         entrance.addLink("alpha", "into", "beta")
 
         store.nodes.values.map(_.name).toSet should be(Set("alpha", "beta"))
-        store.links.values.toSet should be(Set(("alpha", "into", "beta")))
+        store.links.values.toSet should be(Set(Link("alpha", "into", "beta")))
     }
 
     test("delete node deletes a node from the store") {
@@ -58,7 +59,7 @@ class GraphControllerTest extends FunSuite {
     class InMemoryStore extends Store {
         import java.util.UUID
         var nodes = Map[String, Node]()
-        var links = Map[String, (String, String, String)]()
+        var links = Map[String, Link]()
 
         def allNodes() = nodes.values.toSet
 
@@ -76,7 +77,7 @@ class GraphControllerTest extends FunSuite {
             val id = UUID.randomUUID.toString
             add(from)
             add(to)
-            links += (id -> (from, link, to))
+            links += (id -> Link(from, link, to))
             id
         }
 
