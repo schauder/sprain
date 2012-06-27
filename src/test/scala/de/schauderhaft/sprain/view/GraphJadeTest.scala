@@ -11,14 +11,15 @@ import de.schauderhaft.sprain.model.Link
 class GraphJadeTest extends FunSuite {
     import org.scalatest.matchers.ShouldMatchers._
 
+    val uri = "src/main/webapp/WEB-INF/views/graph.jade"
     val engine = new TemplateEngine
-    //    val template = engine.load("src/main/webapp/WEB-INF/views/graph.jade")
+    val template = engine.load(uri)
     test("rendering without parameter") {
-        val output = engine.layout("src/main/webapp/WEB-INF/views/graph.jade")
-
+        val output = engine.layout(uri, template, Map[String, Any]())
     }
+
     test("rendering nodes") {
-        val output = engine.layout("src/main/webapp/WEB-INF/views/graph.jade",
+        val output = engine.layout(uri, template,
             Map("nodes" -> Set(
                 Node("1", "alpha"),
                 Node("2", "beta"))))
@@ -31,7 +32,7 @@ class GraphJadeTest extends FunSuite {
     }
 
     test("rendering links") {
-        val output = engine.layout("src/main/webapp/WEB-INF/views/graph.jade",
+        val output = engine.layout(uri, template,
             Map("links" -> Set(
                 Link("42", "1", "likes", "2"),
                 Link("23", "1", "loves", "2"))))
