@@ -14,6 +14,7 @@ import de.schauderhaft.sprain.db.schema.Nodes
 import de.schauderhaft.sprain.db.schema.Links
 import de.schauderhaft.sprain.model.Node
 import de.schauderhaft.sprain.model.Link
+import org.scalaquery.ql.Join
 
 class PersistentStore extends Store {
 
@@ -26,10 +27,15 @@ class PersistentStore extends Store {
     }
 
     def allLinks() = {
-        val links = for (l <- Links)
-            yield l
+        val links = for {
+            l <- Links
+            f <- Nodes
+            t <- Nodes
+            if l.from === f.id
+            if l.to === t.id
+        } yield (l.id, f, l.link, t)
         links.list.
-            map(Link.tupled(_))
+            map(l => Link.tupled(l._1, Node.tupled(l._2), l._3, Node.tupled(l._4)))
             .toSet
     }
 

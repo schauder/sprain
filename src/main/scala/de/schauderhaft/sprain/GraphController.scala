@@ -32,7 +32,10 @@ class GraphController(val store : Store) {
         value = Array("/links/new"),
         method = Array(POST))
     def addLink(nodeFrom : String, link : String, nodeTo : String) = {
-        store.add(nodeFrom, link, nodeTo)
+        val fromId = store.add(nodeFrom)
+        val toId = store.add(nodeTo)
+
+        store.add(fromId, link, toId)
 
         "redirect:/"
     }

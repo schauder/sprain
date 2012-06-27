@@ -83,11 +83,15 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
 
     txtest("deleting a link removes the link") {
         val store = new PersistentStore()
-        val id = store.add("from", "verb", "to")
-        store.add("from", "verb", "toOther")
+        val fromId = store.add("from")
+        val toId = store.add("to")
+        val toOtherId = store.add("toOther")
+
+        val id = store.add(fromId, "verb", toId)
+        store.add(fromId, "verb", toOtherId)
         store.deleteLink(id)
 
-        store.allLinks.map(l => (l.fromId, l.link, l.toId)) should equal(Set(("from", "verb", "toOther")))
+        store.allLinks.map(l => (l.from.name, l.link, l.to.name)) should equal(Set(("from", "verb", "toOther")))
     }
 
     txtest("deleting a link from an empty store does nothing") {
@@ -100,12 +104,12 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
     txtest("a store contains the links added to it") {
         val store = new PersistentStore()
 
-        store.add("a")
-        store.add("b")
-        store.add("c")
+        val aId = store.add("a")
+        val bId = store.add("b")
+        val cId = store.add("c")
 
-        store.add("a", "to", "b")
+        store.add(aId, "to", bId)
 
-        store.allLinks.map(l => (l.fromId, l.link, l.toId)) should equal(Set(("a", "to", "b")))
+        store.allLinks.map(l => (l.from.name, l.link, l.to.name)) should equal(Set(("a", "to", "b")))
     }
 }

@@ -34,8 +34,8 @@ class GraphJadeTest extends FunSuite {
     test("rendering links") {
         val output = engine.layout(uri, template,
             Map("links" -> Set(
-                Link("42", "1", "likes", "2"),
-                Link("23", "1", "loves", "2"))))
+                Link("42", Node("1", "one"), "likes", Node("2", "two")),
+                Link("23", Node("1", "one"), "loves", Node("1", "one")))))
 
         output should include("1")
         output should include("2")

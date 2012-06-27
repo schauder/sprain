@@ -2,6 +2,6 @@ package de.schauderhaft.sprain.model
 
 case class Link(
     id : String,
-    fromId : String,
+    from : Node,
     link : String,
-    toId : String)
+    to : Node)
