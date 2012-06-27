@@ -1,4 +1,4 @@
-* refactor towards use of proper objects
+* test for page generation, that catches the current problem
 * property test between persistent store and in memory store
 * testing the mapping of requests towards controller methods
 * testing generated html

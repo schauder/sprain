@@ -22,6 +22,7 @@ buildscript {
 
 repositories {
     mavenCentral()
+	mavenCentral name: 'spring snapshots', artifactUrls: ["http://maven.springframework.org/snapshot/"]
 }
 
 
@@ -37,7 +38,8 @@ dependencies {
 	compile 'org.springframework:spring-webmvc:3.1.1.RELEASE'
 	compile 'org.springframework:spring-jdbc:3.1.1.RELEASE'
 	providedCompile  'javax:javaee-api:6.0'
-    
+
+ 
 	// templating
 	compile('org.fusesource.scalate:scalate-core:1.5.3') {
         exclude module: 'scala-compiler'  // the scala compiler is already included above via scalaTools, but in the version 2.9.1 which is at least irritating
