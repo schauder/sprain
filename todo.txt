@@ -1,8 +1,8 @@
+* Knoten und Links löschen
 * refactor schema definition towards model usage
 * property test between persistent store and in memory store
 * testing the mapping of requests towards controller methods
 * testing generated html
-* split NodeStore and LinkStore
 * deploy db to cloud
 * UAT for stuff above
 * find performant roundtrip (JRebel?)
@@ -11,7 +11,6 @@
 * Fehlerseiten für illegale URLs
 * HTML5 webforms
 * angular.js
-* Fehlerseite
 * Bilder (Spinne mit Gehirn)
 * Eindeutigkeit von Referenzen herstellen durch "... im Sinne von" Fragen
 * Idea Sources und Filters

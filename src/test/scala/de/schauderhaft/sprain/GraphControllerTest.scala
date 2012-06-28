@@ -45,9 +45,23 @@ class GraphControllerTest extends FunSuite {
     }
 
     test("delete node deletes a node from the store") {
-        pending
+        val store = new InMemoryStore()
+        val id = store.add("eins")
+        val controller = new GraphController(store)
+
+        controller.deleteNode(id)
+
+        store.allNodes should equal(Set())
     }
 
+    test("delete node redirects to home") {
+        val store = new InMemoryStore()
+        val controller = new GraphController(store)
+
+        val result = controller.deleteNode("23")
+
+        result should equal("redirect:/")
+    }
     test("delete node deletes a node and its attached links from the store") {
         pending
     }

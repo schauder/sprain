@@ -39,5 +39,11 @@ class GraphController(val store : Store) {
 
         "redirect:/"
     }
+
+    def deleteNode(id : String) = {
+        store.deleteNode(id)
+        "redirect:/"
+    }
+
 }
 
