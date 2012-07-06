@@ -31,7 +31,7 @@ class GraphControllerTest extends FunSuite {
 
         entrance.add("alpha")
 
-        store.nodes.values.map(_.name) should equal(List("alpha"))
+        nodeNames(store.nodes) should equal(Set("alpha"))
     }
 
     test("add link adds the link and nodes to the store") {
@@ -40,20 +40,11 @@ class GraphControllerTest extends FunSuite {
 
         entrance.addLink("alpha", "into", "beta")
 
-        store.nodes.values.map(_.name).toSet should be(Set("alpha", "beta"))
-        store.links.values.map(l => (l.from.name, l.link, l.to.name)).toSet should be(Set(("alpha", "into", "beta")))
+        nodeNames(store.nodes) should be(Set("alpha", "beta"))
+        linkNames(store.links) should be(Set(("alpha", "into", "beta")))
     }
 
-    test("delete node deletes a node from the store") {
-        val store = new InMemoryStore()
-        val id = store.add("eins")
-        val controller = new GraphController(store)
-
-        controller.deleteNode(id)
-
-        store.allNodes should equal(Set())
-    }
-
+    
     test("delete node redirects to home") {
         val store = new InMemoryStore()
         val controller = new GraphController(store)
@@ -62,6 +53,18 @@ class GraphControllerTest extends FunSuite {
 
         result should equal("redirect:/")
     }
+
+    test("delete node deletes a node") {
+        val store = new InMemoryStore()
+	val id = store.add("eins")
+        store.add("other")
+        val controller = new GraphController(store)
+
+        controller.deleteNode(id)
+
+        nodeNames(store.nodes) should be(Set("other"))
+    }
+
     test("delete node deletes a node and its attached links from the store") {
         pending
     }
@@ -69,6 +72,11 @@ class GraphControllerTest extends FunSuite {
     test("deleting a link deletes the link from the store, but not its nodes") {
         pending
     }
+
+    private def nodeNames(nodes : Map[_, Node]) = nodes.values.map(_.name).toSet
+    private def linkNames(links : Map[_, Link]) = 
+        links.values.map(l => (l.from.name, l.link, l.to.name)).toSet
+    
 
     class InMemoryStore extends Store {
         import java.util.UUID
