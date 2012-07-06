@@ -7,6 +7,8 @@ import org.springframework.web.servlet.ModelAndView
 import scala.collection.JavaConversions.mapAsJavaMap
 import de.schauderhaft.sprain.store.Store
 import de.schauderhaft.sprain.db.PersistentStore
+import de.schauderhaft.sprain.model.Link
+
 
 @Controller
 class GraphController(val store : Store) {
@@ -40,8 +42,13 @@ class GraphController(val store : Store) {
         "redirect:/"
     }
 
-    def deleteNode(id : String) = {
-        store.deleteNode(id)
+    def deleteNode(nodeId : String) = {
+	for {
+	    Link(linkId,f,_,t) <- store.allLinks
+            if f.id == nodeId || t.id == nodeId
+        } store.deleteLink(linkId)
+             
+        store.deleteNode(nodeId)
         "redirect:/"
     }
 

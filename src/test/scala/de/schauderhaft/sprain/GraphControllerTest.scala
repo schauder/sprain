@@ -66,7 +66,22 @@ class GraphControllerTest extends FunSuite {
     }
 
     test("delete node deletes a node and its attached links from the store") {
-        pending
+        val store = new InMemoryStore()
+
+	val id = store.add("eins")
+	val fromId = store.add("from")
+        val toId = store.add("to")
+
+	store.add(fromId, "should stay", toId)
+        store.add(fromId, "should go", id)
+	store.add(id, "should go as well", toId)
+
+        val controller = new GraphController(store)
+
+        controller.deleteNode(id)
+
+        nodeNames(store.nodes) should be(Set("from", "to"))
+        linkNames(store.links) should be(Set(("from", "should stay", "to")))
     }
 
     test("deleting a link deletes the link from the store, but not its nodes") {
