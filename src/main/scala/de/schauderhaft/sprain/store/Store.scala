@@ -19,5 +19,8 @@ trait Store {
 
     /** removes a link from the store, does nothing when the node is not present in the store*/
     def deleteLink(id : String)
+
+    /** gets all Links connected to the given node */
+    def allForNode(id : String) : Set[Link]
 }
 

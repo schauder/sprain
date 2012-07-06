@@ -126,13 +126,18 @@ class GraphControllerTest extends FunSuite {
         }
 
         /** removes a node from the store, does nothing when the node is not present in the store*/
-        def deleteNode(node : String) {
-            nodes -= node
+        def deleteNode(id : String) {
+            nodes -= id
         }
 
         /** removes a link from the store, does nothing when the node is not present in the store*/
         def deleteLink(id : String) {
             links -= (id)
         }
+
+        def allForNode(nodeId : String) : Set[Link] = for {
+	    l <- allLinks
+            if l.from.id == nodeId || l.to.id == nodeId
+        } yield l
     }
 }

@@ -73,5 +73,19 @@ class PersistentStore extends Store {
 
         linksToDelete.delete
     }
+
+    def allForNode(id : String) = {         
+        val links = for {
+            l <- Links
+            f <- Nodes
+            t <- Nodes
+            if l.from === f.id
+            if l.to === t.id
+            if l.from === id || l.to === id
+        } yield (l.id, f, l.link, t)
+        links.list.
+            map(l => Link.tupled(l._1, Node.tupled(l._2), l._3, Node.tupled(l._4)))
+            .toSet
+    }
 }
 
