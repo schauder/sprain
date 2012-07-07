@@ -1,8 +1,7 @@
-* Knoten und Links löschen
 * refactor schema definition towards model usage
 * property test between persistent store and in memory store
 * testing the mapping of requests towards controller methods
-* testing generated html
+* rework testing generated html
 * deploy db to cloud
 * UAT for stuff above
 * find performant roundtrip (JRebel?)
