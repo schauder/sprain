@@ -8,6 +8,7 @@ import scala.collection.JavaConversions.mapAsJavaMap
 import de.schauderhaft.sprain.store.Store
 import de.schauderhaft.sprain.db.PersistentStore
 import de.schauderhaft.sprain.model.Link
+import de.schauderhaft.sprain.model.Node
 
 
 @Controller
@@ -33,22 +34,29 @@ class GraphController(val store : Store) {
     @RequestMapping(
         value = Array("/links/new"),
         method = Array(POST))
-    def addLink(nodeFrom : String, link : String, nodeTo : String) = {
-        val fromId = store.add(nodeFrom)
-        val toId = store.add(nodeTo)
-
-        store.add(fromId, link, toId)
+    def addLink(fromId : String, link : String, toId : String) = {
+	val ids = for {
+ 	        Node(id,_) <- store.allNodes
+        } yield id
+        
+	if (ids.contains(fromId) && ids.contains(toId))
+            store.add(fromId, link, toId)
 
         "redirect:/"
     }
 
     def deleteNode(nodeId : String) = {
 	for {
-	    Link(linkId,f,_,t) <- store.allLinks
-            if f.id == nodeId || t.id == nodeId
+	    Link(linkId,_,_,_) <- store.allForNode(nodeId)
         } store.deleteLink(linkId)
              
         store.deleteNode(nodeId)
+        "redirect:/"
+    }
+    
+    def deleteLink(linkId : String) = {
+	     
+        store.deleteLink(linkId)
         "redirect:/"
     }
 

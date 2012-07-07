@@ -34,14 +34,27 @@ class GraphControllerTest extends FunSuite {
         nodeNames(store.nodes) should equal(Set("alpha"))
     }
 
-    test("add link adds the link and nodes to the store") {
+    test("add link adds the link does nothing when ids don't exist") {
         val store = new InMemoryStore()
         val entrance = new GraphController(store)
 
         entrance.addLink("alpha", "into", "beta")
 
-        nodeNames(store.nodes) should be(Set("alpha", "beta"))
-        linkNames(store.links) should be(Set(("alpha", "into", "beta")))
+        nodeNames(store.nodes) should be(Set())
+        linkNames(store.links) should be(Set())
+    }
+
+    test("add link adds the link to the store") {
+        val store = new InMemoryStore()
+        val aId = store.add("a")
+        val bId = store.add("b")
+
+        val entrance = new GraphController(store)
+
+        entrance.addLink(aId, "into", bId)
+
+        nodeNames(store.nodes) should be(Set("a","b"))
+        linkNames(store.links) should be(Set(("a","into","b")))
     }
 
     
@@ -85,7 +98,19 @@ class GraphControllerTest extends FunSuite {
     }
 
     test("deleting a link deletes the link from the store, but not its nodes") {
-        pending
+                val store = new InMemoryStore()
+
+	val fromId = store.add("from")
+        val toId = store.add("to")
+
+	val id = store.add(fromId, "one", toId)
+
+        val controller = new GraphController(store)
+
+        controller.deleteLink(id)
+
+        nodeNames(store.nodes) should be(Set("from", "to"))
+        linkNames(store.links) should be(Set())
     }
 
     private def nodeNames(nodes : Map[_, Node]) = nodes.values.map(_.name).toSet
