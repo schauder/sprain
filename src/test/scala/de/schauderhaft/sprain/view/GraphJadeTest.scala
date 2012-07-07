@@ -40,7 +40,12 @@ class GraphJadeTest extends FunSuite {
     }
 
     test ("rendering add link form per node"){
-        pending
+        val output = engine.layout(uri, template,
+            Map("nodes" -> Set(
+                Node("4711", "alpha"),
+                Node("23", "beta"))))
+
+	output should include regex pattern("form nodes/4711/delete")
     }
 
     test ("rendering delete node form per node"){
