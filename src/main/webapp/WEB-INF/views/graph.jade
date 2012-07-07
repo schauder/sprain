@@ -17,6 +17,7 @@ html(lang="en")
     - for(n <- nodes)
       #container
         = n
+        form(action="nodes/#{n.id}/delete" method="post") 
     - for(l <- links)
       #container
         = l
