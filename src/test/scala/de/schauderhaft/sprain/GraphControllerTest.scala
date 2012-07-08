@@ -34,7 +34,7 @@ class GraphControllerTest extends FunSuite {
         nodeNames(store.nodes) should equal(Set("alpha"))
     }
 
-    test("add link adds the link does nothing when ids don't exist") {
+    test("add link does nothing when ids don't exist") {
         val store = new InMemoryStore()
         val entrance = new GraphController(store)
 

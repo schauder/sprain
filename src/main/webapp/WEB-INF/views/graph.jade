@@ -9,15 +9,21 @@ html(lang="en")
     form(action="nodes/new" method="post")
       input(type="text" name="nodeName") 
       input(type="submit") 
-    form(action="links/new" method="post")
-      input(type="text" name="nodeFrom") 
-      input(type="text" name="link") 
-      input(type="text" name="nodeTo") 
-      input(type="submit") 
     - for(n <- nodes)
       #container
         = n
+        form(action="links/new" method="post")
+          input(type="hidden" name="fromId" value="#{n.id}")
+          input(type="text" name="link")
+          select(name="toId")
+            - for (o <- nodes)
+              option(value="#{o.id}")<
+                = o.name
+          input(type="submit")
         form(action="nodes/#{n.id}/delete" method="post") 
+          input(type="submit")
     - for(l <- links)
       #container
         = l
+        form(action="links/#{l.id}/delete" method="post")
+        input(type="submit")

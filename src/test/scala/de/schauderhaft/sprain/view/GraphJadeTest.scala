@@ -45,11 +45,24 @@ class GraphJadeTest extends FunSuite {
                 Node("4711", "alpha"),
                 Node("23", "beta"))))
 
-	output should include regex pattern("form nodes/4711/delete")
+	output should include regex pattern("form links/new")
+ 	output should include regex pattern("input hidden fromId 4711")
+ 	output should include regex pattern("<select name toId")
+ 	output should include regex pattern("option 4711 alpha")
+ 	output should include regex pattern("option 23 beta")
+ 	output should include regex pattern("input text link")
+        output should include regex pattern("input submit")
+ 
     }
 
     test ("rendering delete node form per node"){
-        pending
+                val output = engine.layout(uri, template,
+            Map("nodes" -> Set(
+                Node("4711", "alpha"),
+                Node("23", "beta"))))
+
+	output should include regex pattern("form nodes/4711/delete")
+	output should include regex pattern("form nodes/23/delete")
     }
 
     test("rendering links") {
@@ -66,7 +79,12 @@ class GraphJadeTest extends FunSuite {
 
     
     test ("rendering delete link form per link"){
-        pending
+               val output = engine.layout(uri, template,
+        Map("links" -> Set(
+                Link("42", Node("23", "one"), "likes", Node("4711", "two")))))
+
+       	output should include regex pattern("form links/42/delete")
+        output should include regex pattern("input type submit")
     }
 
     def pattern(pat : String) = pat.replace(" ", ".*").r
