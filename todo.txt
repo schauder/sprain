@@ -23,29 +23,8 @@
 * Feedback Möglichkeit
 * http://arborjs.org/introduction
 * HTML/CSS validation
-
+* read http://www.daml.org/2003/11/swrl/ Semantic Web Rule Language
 
 ------------------------------ for testing controllers
-// from http://stackoverflow.com/a/7916344/66686
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("yourContext.xml")
-public class ControllerTest {
+http://stackoverflow.com/a/7916344/66686
 
-    @Autowired
-    private RequestMappingHandlerAdapter handlerAdapter;
-
-    @Autowired
-    private RequestMappingHandlerMapping handlerMapping;
-
-    @Test
-    public void testController() throws Exception {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        // request init here
-
-        MockHttpServletResponse response = new MockHttpServletResponse();
-        Object handler = handlerMapping.getHandler(request).getHandler();
-        ModelAndView modelAndView = handlerAdapter.handle(request, response, handler);
-
-        // modelAndView and/or response asserts here
-    }
-}
