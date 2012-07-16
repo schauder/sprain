@@ -9,7 +9,7 @@
     - * http://stackoverflow.com/questions/998737/integrating-tomcat-and-eclipse-as-a-hot-deploy-environment
 * Fehlerseiten für illegale URLs
 * HTML5 webforms
-* angular.js
+* angular.js 
 * Bilder (Spinne mit Gehirn)
 * Eindeutigkeit von Referenzen herstellen durch "... im Sinne von" Fragen
 * Idea Sources und Filters
@@ -21,7 +21,7 @@
 * XSS defense
 * Pingback auf Seiten 
 * Feedback Möglichkeit
-* http://arborjs.org/introduction
+* http://arborjs.org/introduction oder http://sigmajs.org/
 * HTML/CSS validation
 * read http://www.daml.org/2003/11/swrl/ Semantic Web Rule Language
 
