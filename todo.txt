@@ -1,3 +1,4 @@
+* zero warnings
 * refactor schema definition towards model usage
 * property test between persistent store and in memory store
 * testing the mapping of requests towards controller methods

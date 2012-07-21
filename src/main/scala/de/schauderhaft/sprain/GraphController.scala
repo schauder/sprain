@@ -16,7 +16,7 @@ class GraphController(val store : Store) {
 
     def this() = this(new PersistentStore)
 
-    @RequestMapping(value = Array("/"))
+    @RequestMapping(value = Array("/"), produces=Array("text/html; charset=UTF-8"))
     def home() = new ModelAndView("graph",
         Map(
             "nodes" -> store.allNodes,

@@ -13,15 +13,12 @@ class GraphControllerMappingTest extends FunSuite with MockitoSugar {
     import org.scalatest.matchers.ShouldMatchers._
 
     test("/ is mapped to home method") {
-	
-        pending
 
-        val controller = mock[GraphController]
+        val controller = new GraphController(new InMemoryStore())
 
         MockMvcBuilders.standaloneSetup(controller).build().
             perform(get("/")).
-            andExpect(status().isOk()).
-            andExpect(content().`type`("text/plain")).
-            andExpect(content().string("hello world"))    
+            andExpect(status().isOk())
+            //.andExpect(content().`type`("text/html; charset=UTF-8"))
     }
 }
