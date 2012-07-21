@@ -45,4 +45,25 @@ class GraphControllerMappingTest extends FunSuite with MockitoSugar {
     			//.andExpect(content().`type`("text/html; charset=UTF-8"))
     			verify(controller).deleteNode("23")
     }
+    test("delete /links/23  is mapped to deleteLink method") {
+    	
+    	val controller = mock[GraphController]
+    	
+    	MockMvcBuilders.standaloneSetup(controller).build().
+    	perform(delete("/links/23")).
+    	andExpect(status().isOk())
+    	//.andExpect(content().`type`("text/html; charset=UTF-8"))
+    	verify(controller).deleteLink("23")
+    }
+
+    test("post /links/23/delete  is mapped to deleteNode method") {
+    	
+    	val controller = mock[GraphController]
+    			
+    			MockMvcBuilders.standaloneSetup(controller).build().
+    			perform(post("/links/23/delete")).
+    			andExpect(status().isOk())
+    			//.andExpect(content().`type`("text/html; charset=UTF-8"))
+    			verify(controller).deleteLink("23")
+    }
 }

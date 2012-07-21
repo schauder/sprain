@@ -1,3 +1,5 @@
+* fight permgenspace errors
+* proper form matcher
 * zero warnings
 * refactor schema definition towards model usage
 * property test between persistent store and in memory store

@@ -56,7 +56,8 @@ class GraphController(val store : Store) {
         "redirect:/"
     }
     
-    def deleteLink(linkId : String) = {
+    @RequestMapping(value = Array("links/{linkId}", "links/{linkId}/delete"))
+    def deleteLink(@PathVariable linkId : String) = {
 	     
         store.deleteLink(linkId)
         "redirect:/"
