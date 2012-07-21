@@ -8,6 +8,8 @@ import org.springframework.mock.web.MockHttpServletResponse
 import org.springframework.test.web.server.setup.MockMvcBuilders
 import org.springframework.test.web.server.request.MockMvcRequestBuilders._
 import org.springframework.test.web.server.result.MockMvcResultMatchers._
+import org.mockito.Mockito._
+
 @RunWith(classOf[JUnitRunner])
 class GraphControllerMappingTest extends FunSuite with MockitoSugar {
     import org.scalatest.matchers.ShouldMatchers._
@@ -20,5 +22,27 @@ class GraphControllerMappingTest extends FunSuite with MockitoSugar {
             perform(get("/")).
             andExpect(status().isOk())
             //.andExpect(content().`type`("text/html; charset=UTF-8"))
+    }
+
+    test("delete /nodes/23  is mapped to deleteNode method") {
+    	
+    	val controller = mock[GraphController]
+    	
+    	MockMvcBuilders.standaloneSetup(controller).build().
+    	perform(delete("/nodes/23")).
+    	andExpect(status().isOk())
+    	//.andExpect(content().`type`("text/html; charset=UTF-8"))
+    	verify(controller).deleteNode("23")
+    }
+
+    test("post /nodes/23/delete  is mapped to deleteNode method") {
+    	
+    	val controller = mock[GraphController]
+    			
+    			MockMvcBuilders.standaloneSetup(controller).build().
+    			perform(post("/nodes/23/delete")).
+    			andExpect(status().isOk())
+    			//.andExpect(content().`type`("text/html; charset=UTF-8"))
+    			verify(controller).deleteNode("23")
     }
 }

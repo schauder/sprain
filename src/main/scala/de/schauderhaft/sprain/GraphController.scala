@@ -9,6 +9,7 @@ import de.schauderhaft.sprain.store.Store
 import de.schauderhaft.sprain.db.PersistentStore
 import de.schauderhaft.sprain.model.Link
 import de.schauderhaft.sprain.model.Node
+import org.springframework.web.bind.annotation.PathVariable
 
 
 @Controller
@@ -45,7 +46,8 @@ class GraphController(val store : Store) {
         "redirect:/"
     }
 
-    def deleteNode(nodeId : String) = {
+    @RequestMapping(value = Array("nodes/{nodeId}", "nodes/{nodeId}/delete"))
+    def deleteNode(@PathVariable nodeId : String) = {
 	for {
 	    Link(linkId,_,_,_) <- store.allForNode(nodeId)
         } store.deleteLink(linkId)
