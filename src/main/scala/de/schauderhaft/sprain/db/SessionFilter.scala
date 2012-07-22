@@ -17,15 +17,6 @@ class SessionFilter(dataSource: DataSource) extends Filter {
 
   val db = Database.forDataSource(dataSource)
 
-  // this is extremely hackish. 
-  // Multiple Filters will try to create the database multiple times 
-  // which will cause bad things tm to happen
-  db withSession {
-    val ddl = (Nodes.ddl ++ Links.ddl)
-    ddl.create
-    println(ddl.createStatements.mkString("\n"))
-  }
-
   override def doFilter(
     request: ServletRequest,
     response: ServletResponse,
@@ -35,8 +26,21 @@ class SessionFilter(dataSource: DataSource) extends Filter {
       chain.doFilter(request, response)
     }
   }
-  //TODO
-  override def init(config: FilterConfig) {}
+
+  override def init(config: FilterConfig) {
+    try {
+      // this is extremely hackish. 
+      // Multiple Filters will try to create the database multiple times 
+      // which will cause bad things tm to happen
+      db withSession {
+        val ddl = (Nodes.ddl ++ Links.ddl)
+        ddl.create
+        println(ddl.createStatements.mkString("\n"))
+      }
+    } catch {
+      case ex: Exception => ex.printStackTrace
+    }
+  }
 
   override def destroy() {}
 }
