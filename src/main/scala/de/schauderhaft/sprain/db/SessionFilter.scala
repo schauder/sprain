@@ -13,30 +13,30 @@ import javax.sql.DataSource
 import de.schauderhaft.sprain.db.schema.Nodes
 import de.schauderhaft.sprain.db.schema.Links
 
-class SessionFilter(dataSource : DataSource) extends Filter {
+class SessionFilter(dataSource: DataSource) extends Filter {
 
-    // this is extremely hackish. 
-    // Multiple Filters will try to create the database multiple times 
-    // which will cause bad things tm to happen
-    val db = Database.forDataSource(dataSource)
+  val db = Database.forDataSource(dataSource)
 
-    db withSession {
-        val ddl = (Nodes.ddl ++ Links.ddl)
-        ddl.create
-        println(ddl.createStatements.mkString("\n"))
+  // this is extremely hackish. 
+  // Multiple Filters will try to create the database multiple times 
+  // which will cause bad things tm to happen
+  db withSession {
+    val ddl = (Nodes.ddl ++ Links.ddl)
+    ddl.create
+    println(ddl.createStatements.mkString("\n"))
+  }
+
+  override def doFilter(
+    request: ServletRequest,
+    response: ServletResponse,
+    chain: FilterChain) {
+
+    db withTransaction {
+      chain.doFilter(request, response)
     }
+  }
+  //TODO
+  override def init(config: FilterConfig) {}
 
-    override def doFilter(
-        request : ServletRequest,
-        response : ServletResponse,
-        chain : FilterChain) {
-
-        db withTransaction {
-            chain.doFilter(request, response)
-        }
-    }
-    //TODO
-    override def init(config : FilterConfig) {}
-
-    override def destroy() {}
+  override def destroy() {}
 }
