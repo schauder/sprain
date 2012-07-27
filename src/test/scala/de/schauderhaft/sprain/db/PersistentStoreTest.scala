@@ -1,7 +1,8 @@
 package de.schauderhaft.sprain.db
 
 import org.junit.runner.RunWith
-import org.scalaquery.ql.basic.BasicDriver.Implicit._
+
+import org.scalaquery.ql.extended.MySQLDriver.Implicit._
 import org.scalaquery.session.Database.threadLocalSession
 import org.scalaquery.session._
 import org.scalatest.junit.JUnitRunner
@@ -23,7 +24,7 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
         println(ddl.createStatements.mkString("\n"))
     }
 
-    def txtest(name : String)(t : => Any) {
+    def txtest(name: String)(t: => Any) {
         test(name) {
             db withTransaction {
                 try t
@@ -113,48 +114,47 @@ class PersistentStoreTest extends FunSuite with BeforeAndAfter {
         store.allLinks.map(l => (l.from.name, l.link, l.to.name)) should equal(Set(("a", "to", "b")))
     }
 
-    txtest("allForNode on an empty store returns the empty Set"){
+    txtest("allForNode on an empty store returns the empty Set") {
         val store = new PersistentStore()
 
-        store.allForNode("23") should equal (Set()) 
+        store.allForNode("23") should equal(Set())
     }
 
-    txtest("allForNode on a from-Node returns the Set with that link"){
-                val store = new PersistentStore()
+    txtest("allForNode on a from-Node returns the Set with that link") {
+        val store = new PersistentStore()
 
         val aId = store.add("a")
         val bId = store.add("b")
         val cId = store.add("c")
 
-        store.add(aId, "to", bId) 
+        store.add(aId, "to", bId)
 
-	names(store.allForNode(aId)) should equal (Set(("a","to","b")))
+        names(store.allForNode(aId)) should equal(Set(("a", "to", "b")))
     }
 
-
-    txtest("allForNode on a to-Node returns the Set with that link"){
-                val store = new PersistentStore()
+    txtest("allForNode on a to-Node returns the Set with that link") {
+        val store = new PersistentStore()
 
         val aId = store.add("a")
         val bId = store.add("b")
         val cId = store.add("c")
 
-        store.add(aId, "to", bId) 
+        store.add(aId, "to", bId)
 
-	names(store.allForNode(bId)) should equal (Set(("a","to","b")))
+        names(store.allForNode(bId)) should equal(Set(("a", "to", "b")))
     }
 
-    txtest("allForNode on a not connected Node returns the empty Set"){
-                val store = new PersistentStore()
+    txtest("allForNode on a not connected Node returns the empty Set") {
+        val store = new PersistentStore()
 
         val aId = store.add("a")
         val bId = store.add("b")
         val cId = store.add("c")
 
-        store.add(aId, "to", bId) 
+        store.add(aId, "to", bId)
 
-	names(store.allForNode(cId)) should equal (Set())
+        names(store.allForNode(cId)) should equal(Set())
     }
 
-    def names(t : Set[Link]) = t.map(l => (l.from.name, l.link, l.to.name))
+    def names(t: Set[Link]) = t.map(l => (l.from.name, l.link, l.to.name))
 }

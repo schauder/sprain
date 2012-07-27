@@ -1,5 +1,5 @@
 package de.schauderhaft.sprain.db.schema
-import org.scalaquery.ql.basic.{ BasicTable => Table }
+import org.scalaquery.ql.extended.{ ExtendedTable => Table }
 
 /*
 create table node(

@@ -1,10 +1,10 @@
 package de.schauderhaft.sprain.db.schema
-import org.scalaquery.ql.basic.{ BasicTable => Table }
+import org.scalaquery.ql.extended.{ ExtendedTable => Table }
 
 object Links extends Table[(String, String, String, String)]("link") {
     def id = column[String]("id", O.PrimaryKey)
     def from = column[String]("from_id", O.NotNull)
-    def link = column[String]("name", O.NotNull)
+    def link = column[String]("link", O.NotNull)
     def to = column[String]("to_id", O.NotNull)
 
     def * = id ~ from ~ link ~ to

@@ -6,7 +6,8 @@ import javax.servlet.ServletResponse
 import javax.servlet.FilterChain
 import org.scalaquery.session.Database
 import org.scalaquery.session.Database.threadLocalSession
-import org.scalaquery.ql.basic.BasicDriver.Implicit._
+
+import org.scalaquery.ql.extended.MySQLDriver.Implicit._
 import javax.servlet.ServletConfig
 import javax.servlet.FilterConfig
 import javax.sql.DataSource
