@@ -4,13 +4,14 @@
 !!! 5
 html(lang="en")
   head
+    link(rel="stylesheet" type="text/css" href="css/main.css")/
   body
     h1 Sprain - Catch your Webby Brain
     form(action="nodes/new" method="post")
       input(type="text" name="nodeName") 
       input(type="submit") 
     - for(n <- nodes)
-      #container
+      .container
         = n
         form(action="links/new" method="post")
           input(type="hidden" name="fromId" value="#{n.id}")
@@ -23,7 +24,7 @@ html(lang="en")
         form(action="nodes/#{n.id}/delete" method="post") 
           input(type="submit")
     - for(l <- links)
-      #container
+      .container
         = l
         form(action="links/#{l.id}/delete" method="post")
           input(type="submit")

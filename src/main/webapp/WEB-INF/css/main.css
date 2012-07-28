@@ -1,0 +1,12 @@
+body {
+	background: #f0f0f0;
+	color: #101010;
+	font-family: Trebuchet MS, Arial, Times New Roman;
+	font-size: 12px;
+}
+
+.container {
+	background: #c0ffc0;
+	border-radius: 15px;
+	padding: 15px;
+}
