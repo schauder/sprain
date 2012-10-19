@@ -3,9 +3,4 @@
 	<!-- Application ID (formatted CB_ACCOUNT/APPNAME) -->
 	<appid>schauder/sprain</appid>
 
-	<resource name="jdbc/sprain" auth="Container" type="javax.sql.DataSource">
-		<param name="username" value="sprain" />
-		<param name="password" value="3SBisb88" />
-		<param name="url" value="jdbc:cloudbees://sprain" />
-	</resource>
 </cloudbees-web-app>
