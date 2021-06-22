@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>SPRAIN</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+<h1>Don't sprain your brain, use SPRAIN</h1>
+
+<div th:each="subject: ${graph.nodes}">
+    <div th:text="${subject.name}" />
+</div>
+
+
+</body>
+
+</html>
