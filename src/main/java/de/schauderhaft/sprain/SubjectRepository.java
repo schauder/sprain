@@ -15,12 +15,7 @@
  */
 package de.schauderhaft.sprain;
 
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.repository.Neo4jRepository;
 
-@Node()
-		record Subject(
-		@Id
-		String name) {
+public interface SubjectRepository extends Neo4jRepository<Subject, String> {
 }
-

@@ -15,6 +15,7 @@
  */
 package de.schauderhaft.sprain;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,13 +25,15 @@ import java.util.Collections;
 @Controller
 public class MainController {
 
+	@Autowired
+	SubjectRepository subjects;
+
 	@RequestMapping
 	ModelAndView main() {
+
 		KnowledgeGraph graph = new KnowledgeGraph();
-		graph.getNodes().add(new Subject("jens"));
-		graph.getNodes().add(new Subject("developer"));
-		graph.getNodes().add(new Subject("frodo"));
-		graph.getNodes().add(new Subject("character"));
+		graph.getNodes().addAll(subjects.findAll());
+
 		return new ModelAndView("main", Collections.singletonMap("graph", graph));
 	}
 }
