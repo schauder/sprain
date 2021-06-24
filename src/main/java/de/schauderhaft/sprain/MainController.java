@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -32,7 +33,14 @@ public class MainController {
 	ModelAndView main() {
 
 		KnowledgeGraph graph = new KnowledgeGraph();
-		graph.getNodes().addAll(subjects.findAll());
+		final List<Subject> all = subjects.findAll();
+		graph.getNodes().addAll(all);
+
+		for (Subject subject : all) {
+			for (Relation relation : subject.getRelation()) {
+				System.out.println(String.format("%s - %s - %s", subject, relation.name, relation.subject));
+			}
+		}
 
 		return new ModelAndView("main", Collections.singletonMap("graph", graph));
 	}
