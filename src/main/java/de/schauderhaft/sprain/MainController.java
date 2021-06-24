@@ -36,12 +36,6 @@ public class MainController {
 		final List<Subject> all = subjects.findAll();
 		graph.getNodes().addAll(all);
 
-		for (Subject subject : all) {
-			for (Relation relation : subject.getRelation()) {
-				System.out.println(String.format("%s - %s - %s", subject, relation.name, relation.subject));
-			}
-		}
-
 		return new ModelAndView("main", Collections.singletonMap("graph", graph));
 	}
 }

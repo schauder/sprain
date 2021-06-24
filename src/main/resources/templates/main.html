@@ -12,10 +12,7 @@
 <h1>Don't sprain your brain, use SPRAIN</h1>
 
 <div th:each="subject: ${graph.nodes}" th:attr="id=${subject.id}" >
-
-    <a th:each="relation: ${subject.relation}" th:attr="href=${relation.subject.id}" th:text="${relation.subject.name}" >
-
-    </a>
+    <a th:each="relation: ${subject.relation}" th:attr="href=${relation.subject.id}" th:text="${relation.subject.name}" />
 </div>
 
 </body>
