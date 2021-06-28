@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Node
 class Subject {
@@ -60,7 +61,7 @@ class Subject {
 		return references.entrySet().stream()
 				.flatMap(e -> e.getValue().stream()
 						.map(v -> new Relation(e.getKey(), v))
-				).toList();
+				).collect(Collectors.toList());
 	}
 
 	@Override
