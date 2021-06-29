@@ -13,7 +13,7 @@
 
 <div th:each="subject: ${graph.nodes}" th:attr="id=${subject.id}" >
     <p th:text="${subject.name}"/>
-    <a th:each="relation: ${subject.relation}" th:href="@{'#' + ${relation.subject.id}}" th:text="${relation.subject.name}" />
+    <a th:each="relation: ${subject.relation}" th:href="@{'#' + ${relation.subject.id}}" th:rel="${relation.name}" th:text="${relation.subject.name} + ' '" />
 </div>
 
 </body>
