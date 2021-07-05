@@ -17,17 +17,23 @@ package de.schauderhaft.sprain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collections;
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+
 @Controller
 public class MainController {
 
 	@Autowired
 	SubjectRepository subjects;
+
+	@Autowired
+	RelationService relations;
 
 	@RequestMapping
 	ModelAndView main() {
@@ -37,5 +43,17 @@ public class MainController {
 		graph.getNodes().addAll(all);
 
 		return new ModelAndView("main", Collections.singletonMap("graph", graph));
+	}
+
+	@RequestMapping(method = POST, path = "/relations")
+	ModelAndView addRelation(@ModelAttribute("subject") String subjectName,
+							 @ModelAttribute("verb") String verbString,
+							 @ModelAttribute("object") String objectName) {
+
+		final Subject subject = relations.getOrCreateSubject(subjectName);
+		final Subject object = relations.getOrCreateSubject(objectName);
+		relations.createRelation(subject, verbString, object);
+
+		return main();
 	}
 }

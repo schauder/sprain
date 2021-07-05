@@ -4,17 +4,29 @@
 
 <head>
     <title>SPRAIN</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 
 <body>
 
 <h1>Don't sprain your brain, use SPRAIN</h1>
 
-<div th:each="subject: ${graph.nodes}" th:attr="id=${subject.id}" >
+<div th:each="subject: ${graph.nodes}" th:attr="id=${subject.id}">
     <p th:text="${subject.name}"/>
-    <p th:each="relation: ${subject.relation}" ><span class="relation" th:text="${relation.name} + ' '"/><a th:href="@{'#' + ${relation.subject.id}}" th:rel="${relation.name}" th:text="${relation.subject.name} + ' '" /></p>
+    <p th:each="relation: ${subject.relation}"><span class="relation" th:text="${relation.name} + ' '"/><a
+            th:href="@{'#' + ${relation.subject.id}}" th:rel="${relation.name}"
+            th:text="${relation.subject.name} + ' '"/></p>
 </div>
+
+<form action="/relations" method="post">
+    <label for="subject">Subject</label>
+    <input id="subject" type="text" name="subject"/>
+    <label for="verb">Verb</label>
+    <input id="verb" type="text" name="verb"/>
+    <label for="object">Object</label>
+    <input id="object" type="text" name="object"/>
+    <input type="submit" value="Submit">
+</form>
 
 </body>
 

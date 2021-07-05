@@ -15,8 +15,27 @@
  */
 package de.schauderhaft.sprain;
 
-import org.springframework.data.neo4j.repository.Neo4jRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface SubjectRepository extends Neo4jRepository<Subject, Long> {
-	Subject findByName(String name);
+@Service
+public class RelationService {
+
+	@Autowired
+	SubjectRepository subjects;
+
+	Subject getOrCreateSubject(String name) {
+
+		Subject subject = subjects.findByName(name);
+
+		return subject == null
+				? subjects.save(new Subject(name))
+				: subject;
+	}
+
+	public void createRelation(Subject subject, String verbString, Subject object) {
+
+		subject.getRelation().add(new Relation(verbString, object));
+		subjects.save(subject);
+	}
 }

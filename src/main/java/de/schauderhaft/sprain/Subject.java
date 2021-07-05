@@ -44,7 +44,7 @@ class Subject {
 	}
 
 	@PersistenceConstructor
-	private Subject(long id, String name) {
+	Subject(long id, String name) {
 
 		this.id = id;
 		this.name = name;
