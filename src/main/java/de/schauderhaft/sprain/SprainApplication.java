@@ -24,28 +24,5 @@ public class SprainApplication implements InitializingBean {
 
 		subjects.deleteAll();
 
-		final Subject jens = new Subject("jens");
-		final Subject developer = new Subject("developer");
-		final Subject character = new Subject("character");
-		final Subject frodo = new Subject("frodo");
-		final Subject bilbo = new Subject("bilbo");
-		final Subject sam = new Subject("sam");
-		final Subject underhill = new Subject("underhill");
-		final Subject baggins = new Subject("baggins");
-
-		subjects.saveAll(asList(jens,developer,frodo,character,bilbo,sam,underhill,baggins));
-
-		jens.addRelation("is a", developer);
-		frodo.addRelation("is a", character);
-		frodo.addRelation("is named", baggins);
-		bilbo.addRelation("is a", character);
-		sam.addRelation("is a", character);
-		frodo.addRelation("alias", underhill);
-		jens.addRelation("likes", frodo);
-		jens.addRelation("likes", bilbo);
-		jens.addRelation("likes", sam);
-
-		subjects.saveAll(asList(jens,developer,frodo,character,bilbo,sam,underhill,baggins));
-
 	}
 }

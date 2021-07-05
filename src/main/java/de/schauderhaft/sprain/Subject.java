@@ -22,6 +22,7 @@ import org.springframework.data.neo4j.core.schema.Node;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,10 +59,10 @@ public class Subject {
 
 	public Collection<Relation> getRelation() {
 
-		return references.entrySet().stream()
+		return Collections.unmodifiableList( references.entrySet().stream()
 				.flatMap(e -> e.getValue().stream()
 						.map(v -> new Relation(e.getKey(), v))
-				).collect(Collectors.toList());
+				).collect(Collectors.toList()));
 	}
 
 	@Override

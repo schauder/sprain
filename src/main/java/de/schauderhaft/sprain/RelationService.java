@@ -17,8 +17,10 @@ package de.schauderhaft.sprain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class RelationService {
 
 	@Autowired
@@ -35,7 +37,7 @@ public class RelationService {
 
 	public void createRelation(Subject subject, String verbString, Subject object) {
 
-		subject.getRelation().add(new Relation(verbString, object));
+		subject.addRelation(verbString, object);
 		subjects.save(subject);
 	}
 }
