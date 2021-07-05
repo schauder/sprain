@@ -29,7 +29,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Node
-class Subject {
+public class Subject {
 
 	@Id
 	@GeneratedValue
