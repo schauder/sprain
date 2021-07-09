@@ -18,6 +18,7 @@ package de.schauderhaft.sprain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -53,6 +54,14 @@ public class MainController {
 		final Subject subject = relations.getOrCreateSubject(subjectName);
 		final Subject object = relations.getOrCreateSubject(objectName);
 		relations.createRelation(subject, verbString, object);
+
+		return main();
+	}
+
+	@RequestMapping(method = POST, path = "/subject/{id}")
+	ModelAndView removeSubject(@PathVariable Long id) {
+
+		subjects.deleteById(id);
 
 		return main();
 	}

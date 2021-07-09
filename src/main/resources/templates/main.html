@@ -12,7 +12,10 @@
 <h1>Don't sprain your brain, use <a href="/">SPRAIN</a></h1>
 
 <div th:each="subject: ${graph.nodes}" th:attr="id=${subject.id}">
-    <h4 th:text="${subject.name}"/>
+    <h4 th:text="${subject.name}" />
+    <form method="post" th:action="'/subject/' + ${subject.id}" >
+        <button name="action" value="delete" type="submit">Delete</button>
+    </form>
     <p th:each="relation: ${subject.relation}"><span class="relation" th:text="${relation.name} + ' '"/><a
             th:href="@{'#' + ${relation.subject.id}}" th:rel="${relation.name}"
             th:text="${relation.subject.name} + ' '"/></p>
