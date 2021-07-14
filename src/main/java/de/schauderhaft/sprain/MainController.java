@@ -58,6 +58,20 @@ public class MainController {
 		return main();
 	}
 
+	@RequestMapping(method = POST, path = "/subject/{subjectId}/relation/{relationId}")
+	ModelAndView removeSubject(@PathVariable Long subjectId, @PathVariable Long relationId) {
+
+		subjects.findById(subjectId).ifPresent(
+				s -> {
+					s.removeRelation(relationId);
+					subjects.save(s);
+				}
+		);
+
+		return main();
+	}
+
+
 	@RequestMapping(method = POST, path = "/subject/{id}")
 	ModelAndView removeSubject(@PathVariable Long id) {
 

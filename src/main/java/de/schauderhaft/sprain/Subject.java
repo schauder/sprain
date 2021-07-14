@@ -80,5 +80,9 @@ public class Subject {
 				", name='" + name + '\'' +
 				'}';
 	}
+
+	public void removeRelation(Long relationId) {
+		references.removeIf(r -> r.id.equals(relationId));
+	}
 }
 
