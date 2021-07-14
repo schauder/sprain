@@ -40,4 +40,14 @@ public class RelationService {
 		subject.addRelation(verbString, object);
 		subjects.save(subject);
 	}
+
+	public void removeRelation(Long subjectId, Long relationId) {
+
+		subjects.findById(subjectId).ifPresent(
+				s -> {
+					s.removeRelation(relationId);
+					subjects.save(s);
+				}
+		);
+	}
 }
