@@ -38,7 +38,7 @@ public class Subject {
 
 	public String name;
 
-	public Map<String, List<Subject>> references = new HashMap<>();
+	public List<Relation> references = new ArrayList<>();
 
 	public Subject(String name) {
 		this.name = name;
@@ -51,18 +51,13 @@ public class Subject {
 		this.name = name;
 	}
 
-	public void addRelation(String name, Subject value) {
+	public void addRelation(String name, Subject object) {
 
-		final List<Subject> subjects = references.computeIfAbsent(name, __ -> new ArrayList<>());
-		subjects.add(value);
+		references.add(new Relation(name, object));
 	}
 
 	public Collection<Relation> getRelation() {
-
-		return Collections.unmodifiableList( references.entrySet().stream()
-				.flatMap(e -> e.getValue().stream()
-						.map(v -> new Relation(e.getKey(), v))
-				).collect(Collectors.toList()));
+		return Collections.unmodifiableList( references);
 	}
 
 	@Override
