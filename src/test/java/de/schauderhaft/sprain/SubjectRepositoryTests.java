@@ -19,14 +19,33 @@ package de.schauderhaft.sprain;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest;
+import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.Neo4jContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.time.Duration;
 import java.util.List;
 
 import static java.util.Arrays.*;
 import static org.assertj.core.api.Assertions.*;
 
+@Testcontainers
 @DataNeo4jTest
 class SubjectRepositoryTests {
+
+	@Container
+	static Neo4jContainer<?> neo4jContainer = new Neo4jContainer<>("neo4j:4.0")
+			.withStartupTimeout(Duration.ofMinutes(5));
+
+	@DynamicPropertySource
+	static void neo4jProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.neo4j.uri", neo4jContainer::getBoltUrl);
+		registry.add("spring.neo4j.authentication.username", () -> "neo4j");
+		registry.add("spring.neo4j.authentication.password", neo4jContainer::getAdminPassword);
+	}
 
 	@Autowired
 	SubjectRepository subjects;
