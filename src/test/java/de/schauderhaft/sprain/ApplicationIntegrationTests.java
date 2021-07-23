@@ -15,6 +15,10 @@
  */
 package de.schauderhaft.sprain;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +46,7 @@ public class ApplicationIntegrationTests {
 
 	@Container
 	static Neo4jContainer<?> neo4jContainer = new Neo4jContainer<>("neo4j:4.0")
+			.withReuse(true)
 			.withStartupTimeout(Duration.ofMinutes(5));
 
 	@DynamicPropertySource
@@ -71,6 +76,19 @@ public class ApplicationIntegrationTests {
 				.andReturn();
 
 		assertThat(mvcResult.getResponse().getContentType()).isEqualTo("text/html;charset=UTF-8");
+
+		final String content = mvcResult.getResponse().getContentAsString();
+
+		final Document doc = Jsoup.parse(content);
+		final Elements anchors = doc.select("h1 > a[href]");
+
+		assertThat(anchors).hasSize(1);
+
+		final Element anchor = anchors.get(0);
+
+		assertThat(anchor.attr("href")).isEqualTo("/");
+		assertThat(anchor.text()).isEqualTo("Sprain");
+
 	}
 
 }
