@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2021 the original author or authors.
  *
@@ -16,24 +15,30 @@
  */
 package de.schauderhaft.sprain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 import org.testcontainers.containers.Neo4jContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.Duration;
-import java.util.List;
 
-import static java.util.Arrays.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Testcontainers
-@DataNeo4jTest
-class SubjectRepositoryTests {
+@SpringBootTest
+public class ApplicationIntegrationTests {
 
 	@Container
 	static Neo4jContainer<?> neo4jContainer = new Neo4jContainer<>("neo4j:4.0")
@@ -46,35 +51,26 @@ class SubjectRepositoryTests {
 		registry.add("spring.neo4j.authentication.password", neo4jContainer::getAdminPassword);
 	}
 
+
 	@Autowired
-	SubjectRepository subjects;
+	WebApplicationContext webApplicationContext;
+
+	MockMvc mockMvc;
+
+	@BeforeEach
+	void setup() {
+		mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+	}
 
 	@Test
-	void test() {
-		subjects.deleteAll();
+	void test() throws Exception {
 
-		final Subject jens = new Subject("jens");
-		final Subject developer = new Subject("developer");
-		final Subject character = new Subject("character");
-		final Subject frodo = new Subject("frodo");
+		MvcResult mvcResult = this.mockMvc.perform(get("/"))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andReturn();
 
-		subjects.saveAll(asList(jens, developer, character, frodo));
-
-		assertThat(jens.id).isNotNull();
-		assertThat(developer.id).isNotNull();
-		assertThat(character.id).isNotNull();
-		assertThat(frodo.id).isNotNull();
-
-		jens.addRelation("is a", developer);
-		frodo.addRelation("is a", character);
-		jens.addRelation("likes", frodo);
-
-		subjects.saveAll(asList(jens, developer, character, frodo));
-
-		final List<Subject> all = subjects.findAll();
-
-		assertThat(all).contains(jens);
-		assertThat(jens.getRelation()).hasSize(2);
+		assertThat(mvcResult.getResponse().getContentType()).isEqualTo("text/html;charset=UTF-8");
 	}
 
 }
