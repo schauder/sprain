@@ -21,41 +21,28 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import org.testcontainers.containers.Neo4jContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.time.Duration;
+import java.util.Collections;
 
+import static java.util.Collections.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Testcontainers
 @SpringBootTest
 public class ApplicationIntegrationTests {
 
-	@Container
-	static Neo4jContainer<?> neo4jContainer = new Neo4jContainer<>("neo4j:4.0")
-			.withReuse(true)
-			.withStartupTimeout(Duration.ofMinutes(5));
-
-	@DynamicPropertySource
-	static void neo4jProperties(DynamicPropertyRegistry registry) {
-		registry.add("spring.neo4j.uri", neo4jContainer::getBoltUrl);
-		registry.add("spring.neo4j.authentication.username", () -> "neo4j");
-		registry.add("spring.neo4j.authentication.password", neo4jContainer::getAdminPassword);
-	}
-
+	@MockBean(name="subjectRepository")
+	SubjectRepository subjects;
 
 	@Autowired
 	WebApplicationContext webApplicationContext;
@@ -68,7 +55,7 @@ public class ApplicationIntegrationTests {
 	}
 
 	@Test
-	void test() throws Exception {
+	void mainPageContainsRefToItself() throws Exception {
 
 		MvcResult mvcResult = this.mockMvc.perform(get("/"))
 				.andDo(print())
@@ -88,6 +75,31 @@ public class ApplicationIntegrationTests {
 
 		assertThat(anchor.attr("href")).isEqualTo("/");
 		assertThat(anchor.text()).isEqualTo("Sprain");
+
+	}
+
+	@Test
+	void mainPageContainsSubjectElement() throws Exception {
+
+		Mockito.when(subjects.findAll()).thenReturn(singletonList(new Subject("one")));
+
+		MvcResult mvcResult = this.mockMvc.perform(get("/"))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andReturn();
+
+		assertThat(mvcResult.getResponse().getContentType()).isEqualTo("text/html;charset=UTF-8");
+
+		final String content = mvcResult.getResponse().getContentAsString();
+
+		final Document doc = Jsoup.parse(content);
+		final Elements anchors = doc.select("div > h4");
+
+		assertThat(anchors).hasSize(1);
+
+		final Element anchor = anchors.get(0);
+
+		assertThat(anchor.text()).isEqualTo("one");
 
 	}
 
